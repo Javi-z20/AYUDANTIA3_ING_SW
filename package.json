@@ -1,0 +1,37 @@
+{
+  "name": "techstore-api-rest",
+  "version": "1.0.0",
+  "description": "API REST de Productos y Categorías con Express, Prisma ORM, PostgreSQL y Zod",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:generate": "npx prisma generate",
+    "prisma:studio": "npx prisma studio",
+    "prisma:seed": "node prisma/seed.js"
+  },
+  "keywords": [
+    "express",
+    "prisma",
+    "postgresql",
+    "zod",
+    "api-rest",
+    "products",
+    "categories"
+  ],
+  "author": "Ayudantía Ingeniería de Software",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "morgan": "^1.10.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "prisma": "^6.19.3"
+  }
+}

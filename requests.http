@@ -1,0 +1,106 @@
+### Variables
+@baseUrl = http://localhost:3000/api
+
+### 1. Health Check
+GET {{baseUrl}}/health
+
+### =================================================================
+### SECCIÓN 1: CATEGORÍAS
+### =================================================================
+
+### 2. Listar todas las categorías (incluye conteo de productos)
+GET {{baseUrl}}/categories
+
+### 3. Obtener una categoría por ID (incluye sus productos)
+GET {{baseUrl}}/categories/1
+
+### 4. Crear una nueva categoría (ÉXITO)
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "name": "Gaming",
+  "description": "Consolas, periféricos de alto rendimiento y monitores gamer."
+}
+
+### 5. Intentar crear una categoría con nombre DUPLICADO (Error 409 Conflicto por @unique en Prisma)
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "name": "Electrónica",
+  "description": "Intento de duplicar categoría existente"
+}
+
+### 6. Intentar crear categoría con ERROR DE VALIDACIÓN ZOD (nombre muy corto)
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "name": "AB"
+}
+
+### 7. Actualizar una categoría
+PUT {{baseUrl}}/categories/1
+Content-Type: application/json
+
+{
+  "description": "Descripción actualizada para categoría Electrónica."
+}
+
+### =================================================================
+### SECCIÓN 2: PRODUCTOS
+### =================================================================
+
+### 8. Listar todos los productos
+GET {{baseUrl}}/products
+
+### 9. Filtrar productos por categoría y rango de precio
+GET {{baseUrl}}/products?categoryId=1&minPrice=30000&maxPrice=1500000
+
+### 10. Filtrar solo productos con Stock disponible
+GET {{baseUrl}}/products?inStock=true
+
+### 11. Obtener un producto por su ID
+GET {{baseUrl}}/products/1
+
+### 12. Crear un nuevo producto (ÉXITO)
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Teclado Mecánico RGB Switch Red",
+  "description": "Teclado mecánico compacto al 75%, switches lubricados de fábrica.",
+  "price": 69990,
+  "stock": 20,
+  "sku": "GAM-TEC-001",
+  "isAvailable": true,
+  "categoryId": 1
+}
+
+### 13. Intentar crear un producto con ERRORES DE VALIDACIÓN ZOD (precio negativo, stock decimal, SKU inválido)
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "X",
+  "price": -100,
+  "stock": 4.5,
+  "sku": "",
+  "categoryId": 999
+}
+
+### 14. Actualizar stock y precio de un producto
+PUT {{baseUrl}}/products/1
+Content-Type: application/json
+
+{
+  "price": 1199990,
+  "stock": 25
+}
+
+### 15. Eliminar un producto por su ID
+DELETE {{baseUrl}}/products/4
+
+### 16. Intentar eliminar una categoría que TIENE productos asociados (Error 400 por restricción de integridad)
+DELETE {{baseUrl}}/categories/1
